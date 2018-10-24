@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
+from django.utils import timezone
 
 from .models import Post, Comment
 
@@ -12,8 +13,8 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 def index(request):
-    latest_post_list = Post.objects.order_by('-published_date')[:5]
-    context = { 'latest_post_list': latest_post_list }
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    context = { 'latest_post_list': posts }
     return render(request, 'dwitterapp/index.html', context)
 
 

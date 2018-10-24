@@ -1,9 +1,15 @@
+<div>
+    <h1><a href="/">Dwitter - Twitter for Dogs</a></h1>
+</div>
+
 {% if latest_post_list %}
-    <ul>
-    {% for post in latest_post_list %}
-        <li><a href="{% url 'dwitterapp:post' post.id %}">{{ post.title }}</a></li>
-    {% endfor %}
-    </ul>
+   {% for post in latest_post_list %}
+    <div>
+        <p>published: {{ post.published_date }}</p>
+        <h1><a href="">{{ post.title }}</a></h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+{% endfor %}
 {% else %}
     <p>No posts are available.</p>
 {% endif %}
