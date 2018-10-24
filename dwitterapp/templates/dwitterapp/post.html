@@ -1,0 +1,18 @@
+<h1>{{ post.title }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<p>{{ post.text }}</p>
+<h5>Author: {{ post.author }}</h5>
+<h6>Published on: {{ post.published_date }}</h6>
+
+<br>
+
+<h2>{{ post.id }}</h2>
+
+<form action="{% url 'dwitterapp:comment' post.id %}" method="post">
+    {% csrf_token %}
+    <label>Comment</label>
+    <input type="text" name="new_comment" id="new_comment" value="Comment here">
+    <input type="submit" value="Comment" />
+</form>
