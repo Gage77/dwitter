@@ -1,15 +1,15 @@
 <div>
-    <h1><a href="/">Dwitter - Twitter for Dogs</a></h1>
+    <h1><a href="/dwitter">Dwitter - Twitter for Dogs</a></h1>
 </div>
 
 {% if latest_post_list %}
    {% for post in latest_post_list %}
     <div>
         <p>published: {{ post.published_date }}</p>
-        <h1><a href="">{{ post.title }}</a></h1>
+        <h1><a href="{% url 'dwitterapp:post' post.id %}">{{ post.title }}</a></h1>
         <p>{{ post.text|linebreaksbr }}</p>
     </div>
-{% endfor %}
+    {% endfor %}
 {% else %}
     <p>No posts are available.</p>
 {% endif %}
