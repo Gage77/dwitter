@@ -1,20 +1,20 @@
-<head>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-</head>
+{% extends 'dwitterapp/base.html' %}
 
-<div>
-    <h1><a href="/dwitter">Dwitter - Twitter for Dogs</a></h1>
-</div>
-
-{% if latest_post_list %}
-   {% for post in latest_post_list %}
-    <div>
-        <p>published: {{ post.published_date }}</p>
-        <h1><a href="{% url 'dwitterapp:post' post.id %}">{{ post.title }}</a></h1>
-        <p>{{ post.text|linebreaksbr }}</p>
-    </div>
-    {% endfor %}
-{% else %}
-    <p>No posts are available.</p>
-{% endif %}
+{% block content %}
+    {% if latest_post_list %}
+        {% for post in latest_post_list %}
+        <div class="post">
+            <h1><a href="{% url 'dwitterapp:post' post.id %}">{{ post.title }}</a></h1>
+            <div class="author">
+                <p><a href="#">@{{ post.author }}</a></p>
+            </div>
+            <p>{{ post.text|linebreaksbr }}</p>
+            <div class="date">
+                <p>published: {{ post.published_date }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No posts are available.</p>
+    {% endif %}
+{% endblock %}

@@ -1,18 +1,22 @@
-<h1>{{ post.title }}</h1>
+{% extends 'dwitterapp/base.html' %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
 
-<p>{{ post.text }}</p>
-<h5>Author: {{ post.author }}</h5>
-<h6>Published on: {{ post.published_date }}</h6>
+    <div class="post">
+        <h1>{{ post.title }}</h1>
+        <p>@{{ post.author }}</p>
+        <p>{{ post.text }}</p>
+        <div class="date">Published on: {{ post.published_date }}</div>
+    </div>
 
-<br>
 
-<h2>{{ post.id }}</h2>
-
-<form action="{% url 'dwitterapp:comment' post.id %}" method="post">
-    {% csrf_token %}
-    <label>Comment</label>
-    <input type="text" name="new_comment" id="new_comment" value="Comment here">
-    <input type="submit" value="Comment" />
-</form>
+    <form action="{% url 'dwitterapp:comment' post.id %}" method="post">
+        {% csrf_token %}
+        <label>Comment</label>
+        <input type="text" name="new_comment" id="new_comment" value="Comment here">
+        <input type="submit" value="Comment" />
+    </form>
+{% endblock %}
