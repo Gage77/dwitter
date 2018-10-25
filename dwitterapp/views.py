@@ -3,10 +3,11 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from .models import Post, Comment
+from .forms import PostForm
 
 from django.shortcuts import render, get_object_or_404
 
@@ -21,6 +22,20 @@ def index(request):
 def post(request, post_id):
     thisPost = get_object_or_404(Post, pk=post_id)
     return render(request, 'dwitterapp/post.html', {'post': thisPost})
+
+
+def new_post(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('index')
+    else:
+        form = PostForm()
+    return render(request, 'dwitterapp/post_edit.html', {'form': form})
 
 
 def comment(request, post_id):
