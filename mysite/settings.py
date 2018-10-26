@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 
+SITE_ID = 1
+
 
 # Application definition
 
@@ -37,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django_comments',
     'dwitterapp',
 ]
 
@@ -115,6 +119,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+# Login redirect
+LOGIN_REDIRECT_URL = '/'
 
 # Media files (images/videos)
 MEDIA_URL = '/media/'

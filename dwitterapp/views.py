@@ -2,13 +2,13 @@
 from __future__ import unicode_literals
 
 import arrow
-from django.views.generic import DetailView, CreateView, ListView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView
 
 from .forms import PostForm
 from .models import Post
 
 
-# Create your views here.
 class postListView(ListView):
     model = Post
     template_name = 'index.html'
@@ -34,3 +34,9 @@ class postUpdateView(UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'post_edit.html'
+
+
+class postRemoveView(DeleteView):
+    model = Post
+    template_name = 'post_remove.html'
+    success_url = reverse_lazy('post_list')

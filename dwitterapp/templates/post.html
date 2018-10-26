@@ -9,17 +9,11 @@
         <h1>{{ object.title }}</h1>
         {% if user.is_authenticated %}
             <a class="btn btn-default" href="{% url 'post_edit' object.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a class="btn btn-default" href="{% url 'post_remove' object.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
         {% endif %}
         <p>@{{ object.author }}</p>
         <p>{{ object.text }}</p>
         <div class="date">Published on: {{ object.published_date }}</div>
     </div>
 
-
-{#    <form action="{% url 'dwitterapp:comment' object.id %}" method="post">#}
-{#        {% csrf_token %}#}
-{#        <label>Comment</label>#}
-{#        <input type="text" name="new_comment" id="new_comment" value="Comment here">#}
-{#        <input type="submit" value="Comment" />#}
-{#    </form>#}
 {% endblock %}
