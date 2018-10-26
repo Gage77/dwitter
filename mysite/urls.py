@@ -18,5 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^dwitter/', include('dwitterapp.urls', namespace="dwitterapp")),
+    url(r'^dwitter/', include('dwitterapp.urls')),
 ]

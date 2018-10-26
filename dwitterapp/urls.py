@@ -1,16 +1,15 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
-from . import views
+from dwitterapp.views import postListView, postDetailView, postCreateView, postUpdateView
+
 
 urlpatterns = [
-    # Index page
-    url(r'^$', views.index, name='index'),
-    # Account page
-    url(r'account/(?P<account_username>[a-zA-Z0-9_.-]*)/$', views.account, name='account'),
-    # Individual post
-    url(r'post/(?P<post_id>[0-9]+)/$', views.post, name='post'),
-    # Add a new post
-    url(r'post/new/', views.new_post, name="new_post"),
-    # Comments
-    url(r'^(?P<post_id>[0-9]+)/comment/$', views.comment, name='comment'),
+    url(r'^$', postListView.as_view(), name='post_list'),
+    url(r'^post/', include([
+        url(r'^add/$', postCreateView.as_view(), name='post_add'),
+        url(r'^(?P<pk>\d+)/', include([
+            url(r'^$', postDetailView.as_view(), name='post_detail'),
+            url(r'^edit/$', postUpdateView.as_view(), name='post_edit'),
+        ]))
+    ]))
 ]

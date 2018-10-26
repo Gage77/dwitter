@@ -1,60 +1,36 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect
-from django.utils import timezone
+import arrow
+from django.views.generic import DetailView, CreateView, ListView, UpdateView
 
-from .models import Post, Comment
 from .forms import PostForm
-
-from django.shortcuts import render, get_object_or_404
+from .models import Post
 
 
 # Create your views here.
-def index(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    context = { 'latest_post_list': posts }
-    return render(request, 'dwitterapp/index.html', context)
+class postListView(ListView):
+    model = Post
+    template_name = 'index.html'
+
+    def get_queryset(self):
+        qs = super(postListView, self).get_queryset()
+        qs.filter(published_date__lte=arrow.now().datetime)
+        return qs
 
 
-def post(request, post_id):
-    thisPost = get_object_or_404(Post, pk=post_id)
-    return render(request, 'dwitterapp/post.html', {'post': thisPost})
+class postDetailView(DetailView):
+    model = Post
+    template_name = 'post.html'
 
 
-def new_post(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('index')
-    else:
-        form = PostForm()
-    return render(request, 'dwitterapp/post_edit.html', {'form': form})
+class postCreateView(CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'post_edit.html'
 
 
-def comment(request, post_id):
-    p = get_object_or_404(Post, pk=post_id)
-    try:
-        new_comment = p.comment_set.get(pk=request.POST['comment'])
-    except (KeyError, Comment.DoesNotExist):
-        # Redisplay the post
-        return render(request, 'dwitterapp/post.html', {
-            'post': p,
-            'error_message': "Unable to comment on post"
-        })
-    else:
-        new_comment.text = request.POST().get("new_comment")
-        new_comment.save()
-        return render(request, 'dwitterapp/post.html', {'post': p})
-
-
-def account(request, account_username):
-    return HttpResponse("You're looking at account %s." % account_username)
-
-
+class postUpdateView(UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'post_edit.html'
