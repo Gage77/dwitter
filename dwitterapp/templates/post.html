@@ -13,6 +13,9 @@
         {% endif %}
         <p>@{{ object.author }}</p>
         <p>{{ object.text }}</p>
+        {% if object.attachment %}
+            <img src="{{ object.attachment.url }}">
+        {% endif %}
         <div class="date">Published on: {{ object.published_date }}</div>
     </div>
 

@@ -66,3 +66,18 @@ h1, h2, h3, h4 {
     color: #456f93;
     text-decoration: none;
 }
+
+.upload {
+    width: 64px;
+    height: 64px;
+    background: url("../img/upload-icon.png");
+    overflow: hidden;
+}
+
+.upload input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+}

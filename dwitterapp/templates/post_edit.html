@@ -7,7 +7,23 @@
         <h1>New post</h1>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+        <label>Title:</label>
+        <div>
+            {{ form.title }}
+        </div>
+        <label>Text:</label>
+        <div>
+            {{ form.text }}
+        </div>
+        <hr>
+        <label>Attachment:</label>
+        <div class="upload">
+            {{ form.attachment }}
+        </div>
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 {% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+{% endblock extra_js %}
