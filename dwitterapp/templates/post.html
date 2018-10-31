@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     {% if error_message %}
@@ -11,10 +12,14 @@
             <a class="btn btn-default" href="{% url 'post_edit' object.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
             <a class="btn btn-default" href="{% url 'post_remove' object.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
         {% endif %}
-        <p>@{{ object.author }}</p>
+        <p><a href="#">@{{ object.author }}</a></p>
         <p>{{ object.text }}</p>
         {% if object.attachment %}
-            <img src="{{ object.attachment.url }}">
+            <div class="center-el">
+                <a href="{{ object.attachment.url }}">
+                    <img src="{{ object.attachment.url }}" class="img-responsive" alt="attached image">
+                </a>
+            </div>
         {% endif %}
         <div class="date">Published on: {{ object.published_date }}</div>
     </div>

@@ -1,19 +1,56 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     {% if object_list %}
         {% for post in object_list %}
         <div class="post">
-            <h1><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h1>
-            <div class="author">
-                <p><a href="#">@{{ post.author }}</a></p>
-            </div>
-            <p>{{ post.text|linebreaksbr }}</p>
-            <div class="date">
-                <p>published: {{ post.published_date }}</p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h1>
+                    <div class="author">
+                        <p><a href="#">@{{ post.author }}</a></p>
+                    </div>
+                    <p>{{ post.text|linebreaksbr }}</p>
+                    <div class="date">
+                        <p>published: {{ post.published_date }}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    {% if post.attachment %}
+                        <a href="{% url 'post_detail' post.id %}">
+                            <img src="{{ post.attachment.url }}" class="img-thumbnail">
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
+        <hr>
         {% endfor %}
+        <!-- Pagination -->
+        {% if is_paginated %}
+            <div class="center-el">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <li class="active"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
     {% else %}
         <p>No posts are available.</p>
     {% endif %}

@@ -12,6 +12,7 @@ from .models import Post
 class postListView(ListView):
     model = Post
     template_name = 'index.html'
+    paginate_by = 10
 
     def get_queryset(self):
         qs = super(postListView, self).get_queryset()

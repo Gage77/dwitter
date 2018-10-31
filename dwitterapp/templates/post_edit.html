@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     {% if object %}
@@ -6,9 +7,9 @@
     {% else %}
         <h1>New post</h1>
     {% endif %}
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
         <label>Title:</label>
-        <div>
+        <div class="title-input">
             {{ form.title }}
         </div>
         <label>Text:</label>
@@ -17,11 +18,18 @@
         </div>
         <hr>
         <label>Attachment:</label>
-        <div class="upload">
+        <div>
             {{ form.attachment }}
         </div>
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
+    {% if object.attachment %}
+        <div>
+            <a href="{{ object.attachment.url }}">
+                <img src="{{ object.attachment.url }}" class="img-thumbnail" style="border:0;">
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block extra_js %}
