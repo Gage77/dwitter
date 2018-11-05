@@ -120,3 +120,7 @@ h1, h2, h3, h4 {
 .pagination-nums {
     magin: 0 auto;
 }
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}

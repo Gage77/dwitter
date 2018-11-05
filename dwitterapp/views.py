@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import arrow
-from django.urls import reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView
 
 from .forms import PostForm
@@ -29,6 +29,7 @@ class postCreateView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'post_edit.html'
+    success_message = 'Post added successfully'
 
 
 class postUpdateView(UpdateView):

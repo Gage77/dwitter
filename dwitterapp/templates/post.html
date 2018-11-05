@@ -12,7 +12,7 @@
             <a class="btn btn-default" href="{% url 'post_edit' object.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
             <a class="btn btn-default" href="{% url 'post_remove' object.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
         {% endif %}
-        <p><a href="#">@{{ object.author }}</a></p>
+        <p><a href="#" class="author">@{{ object.author }}</a></p>
         <p>{{ object.text }}</p>
         {% if object.attachment %}
             <div class="center-el">
